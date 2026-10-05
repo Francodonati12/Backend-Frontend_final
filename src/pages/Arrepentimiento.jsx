@@ -1,41 +1,61 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Arrepentimiento() {
-    const token = localStorage.getItem("access_token");
+  const { user } = useAuth();
+  const token = localStorage.getItem("access_token");
 
-    return (
-        <div className="max-w-xl mx-auto bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
-            <h2 className="text-2xl font-bold text-gray-900">Derecho de Arrepentimiento</h2>
-            <p className="text-sm text-gray-600 leading-relaxed">
-                De acuerdo con la Disposición 954/2025 y la Ley 24.240, tenés derecho a revocar tu compra dentro de los <strong className="text-gray-800">10 días corridos</strong> contados desde la recepción del producto o confirmación de la compra[cite: 6].
-            </p>
-            <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
-                <li>El trámite es completamente gratuito[cite: 6].</li>
-                <li>No necesitás justificar el motivo[cite: 6].</li>
-                <li>Los gastos de devolución corren por cuenta del vendedor[cite: 6].</li>
-            </ul>
+  return (
+    <div className="max-w-2xl mx-auto my-6 bg-[#13141f] border border-[#232538] rounded-3xl p-6 sm:p-10 shadow-2xl space-y-6">
+      <div className="space-y-2">
+        <span className="text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
+          Marco Regulatorio Nacional
+        </span>
+        <h1 className="text-3xl font-black text-white tracking-tight">
+          Derecho de Arrepentimiento
+        </h1>
+        <p className="text-xs text-neutral-400">
+          Resolución N° 954/2025 y Ley Nacional de Defensa del Consumidor N° 24.240
+        </p>
+      </div>
 
-            {token ? (
-                <div className="pt-4">
-                    <p className="text-sm text-gray-600 mb-3">Para ejercer este derecho sobre uno de tus pedidos:</p>
-                    <Link
-                        to="/mis-pedidos"
-                        className="inline-block bg-emerald-600 text-white font-medium text-sm px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors"
-                    >
-                        Ir a mis pedidos para arrepentirme
-                    </Link>
-                </div>
-            ) : (
-                <div className="pt-4">
-                    <p className="text-sm text-gray-600 mb-3">Para identificar tu compra, por favor iniciá sesión[cite: 6]:</p>
-                    <Link
-                        to="/login"
-                        className="inline-block bg-gray-600 text-white font-medium text-sm px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
-                    >
-                        Iniciar sesión
-                    </Link>
-                </div>
-            )}
+      <div className="bg-[#0b0c10] border border-[#232538] rounded-2xl p-5 space-y-3 text-sm text-neutral-300">
+        <p className="leading-relaxed">
+          Tienes derecho a revocar la aceptación del producto o servicio adquirido dentro del plazo de{" "}
+          <strong className="text-orange-400">10 (diez) días corridos</strong> contados a partir de la fecha en que se entregue el bien o se celebre el contrato.
+        </p>
+        <ul className="list-disc list-inside space-y-1.5 text-xs text-neutral-400 pt-2">
+          <li>El trámite es completamente gratuito para el consumidor.</li>
+          <li>No necesitas fundamentar ni justificar la causa de la revocación.</li>
+          <li>Los costos de flete o devolución corren por cuenta exclusiva del vendedor.</li>
+        </ul>
+      </div>
+
+      {token || user ? (
+        <div className="pt-2 space-y-3">
+          <p className="text-xs text-neutral-400">
+            Para ejercer este derecho sobre alguna de tus compras vigentes:
+          </p>
+          <Link
+            to="/mis-pedidos"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-black font-extrabold text-sm rounded-xl transition-all shadow-lg shadow-orange-500/25"
+          >
+            <span>Ir a Mis Compras para Revocar 📦</span>
+          </Link>
         </div>
-    );
+      ) : (
+        <div className="pt-2 space-y-3">
+          <p className="text-xs text-neutral-400">
+            Para identificar tu compra y gestionar la solicitud de arrepentimiento, por favor inicia sesión:
+          </p>
+          <Link
+            to="/login"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-800 hover:bg-neutral-700 text-orange-400 hover:text-white border border-neutral-700 font-bold text-sm rounded-xl transition-all"
+          >
+            <span>Iniciar Sesión en mi Cuenta</span>
+          </Link>
+        </div>
+      )}
+    </div>
+  );
 }
